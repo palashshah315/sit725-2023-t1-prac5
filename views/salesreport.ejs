@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!--Custom CSS-->
+    <link rel="stylesheet" href="styles.css">
+    <!--Semantic-UI CSS-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.css">
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+
+    <title>Sales Report</title>
+</head>
+
+<body>
+    <!--Vertical Navbar-->
+    <div class="vertical-nav bg-white" id="sidebar">
+        <div class="py-4 px-3 mb-4" style="background: linear-gradient(to top, #0066eb 0%, #ff8ab3 68%);">
+            <div class="media d-flex align-items-center"><img src="images/admin.svg" alt="..." width="65"
+                    class="mr-3 rounded-circle img-thumbnail shadow-sm">
+                &emsp;<div class="media-body">
+                    <h4 class="m-0">
+                        <p class="text-white"><shop-name>
+                    </h4>
+                    <p class="font-weight-light text-white mb-0">(Admin)</p>
+                </div>
+            </div>
+        </div>
+        <form action="/logout?_method=DELETE" method="POST">
+            <center><button type="submit" class="btn btn-danger">
+                    <p class="text-white">Log Out</p>
+                </button></center>
+        </form>
+        <h5 class="ui horizontal divider header text-primary">
+            MAIN
+        </h5>
+
+        <ul class="nav flex-column bg-white mb-0">
+            <li class="nav-item">
+                <a href="/" class="nav-link text-dark font-italic">
+                    <i class="home icon"></i>
+                    Dashboard
+
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/addorder" class="nav-link text-dark font-italic">
+                    <i class="rupee sign icon"></i>
+                    Add Order
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/vieworder" class="nav-link text-dark font-italic">
+                    <i class="eye icon"></i>
+                    View Orders
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/viewstock" class="nav-link text-dark font-italic">
+                    <i class="tags icon"></i>
+                    View Stocks
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/addstock" class="nav-link text-dark font-italic">
+                   <i class="plus circle icon"></i>
+                        Add Stock
+                   
+                </a>
+            </li>
+            <li class="nav-item">
+                <a href="/salesreport" class="nav-link text-dark font-italic"  style="background: linear-gradient(to right, #0066eb 0%, #ff8ab3 68%);">
+                    <p class="text-white"><i class="plus circle icon"></i>
+                        Sales Report
+                    </p>
+                </a>
+            </li>
+        </ul>
+    </div>
+    <!-- Page content holder -->
+    <div class="page-content p-5" id="content" style="background: linear-gradient(to right, #e9edf1 47%, #ff8ab3 100%);">
+        <!-- Toggle button -->
+        <button id="sidebarCollapse" type="button" class="btn btn-light bg-white rounded-pill shadow-sm px-4 mb-4"><i
+                class="align justify icon"></i><small class="text-uppercase font-weight-bold">Menu</small></button>
+        
+                <!-- Page content -->
+                <h1>Sales Report</h1>
+                <center><img class="ui small rounded image" src="/images/creditcard.svg"></center>
+                <div class="ui fluid container">
+                <table class="ui inverted pink celled table celled tbl_code_with_mark" id="myTable">
+                   <thead>
+                        <th>Select Category To Generate Sales Report</th>
+                   </thead>
+                    <tbody>
+                        <tr style="background: linear-gradient(to left, #0066eb 0%, #ff8ab3 68%);">
+                            <td class="table-warning">
+                                <div class="form-floating">
+                                    <select class="form-select" aria-label="Default select example" id="category" required>
+                            
+                                        <option value="Shirt"> Shirt </option>
+                                        <option value="Jeans"> Jeans </option>
+                                        <option value="T-Shirt"> T-Shirt </option>
+                            
+                            
+                                    </select>
+                                    <label for="floatingInput">Category</label>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <center><button type="button" id="submit_button" onClick="generateReportByCategory()" class="ui teal submit button">Generate Report</button>
+                </div>
+                <br>
+            <div class="ui fluid container">
+                <h3>Generated Sales Report</h3>
+                <table class="ui inverted pink celled table celled tbl_code_with_mark" id="myTable">
+                    <thead>
+                        <th>Category</th>
+                        <th>Customer Name</th>
+                        <th>Total Amount</th>
+                    </thead>
+                    <tbody id="generatedreport">
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+                <!-- Semnatic-UI Scripts -->
+                
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.13/semantic.min.js"></script>
+                
+                <!-- Option 1: Bootstrap Bundle with Popper -->
+                <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
+                    integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0"
+                    crossorigin="anonymous"></script>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+                    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+            <script>
+                function generateReportByCategory(){
+                    var category = document.getElementById("category").value;
+                    
+                    var query = { 
+                        "category":category
+                    }
+                    var jsonQuery = query;
+                    console.log(jsonQuery);
+                    $.ajax({
+                        url: '/generatesalesreport',
+                        data: JSON.stringify(jsonQuery),
+                        processData: false,
+                        contentType: "application/json; charset=UTF-8",
+                        type: 'post',
+                        success: (result) => {
+                            console.log(result.data);
+                            var ui = "";
+                            for(var i=0;i<result.data.length;i++){
+                                ui+="<tr><td>"+result.data[i].category+"</td>"+
+                                    "<td>"+result.data[i].customer_name+"</td>"+
+                                    "<td>"+result.data[i].total_amount+"</td>"
+                                    
+                            }
+                           
+                            document.getElementById("generatedreport").innerHTML = ui;
+                             addLastRow(result.data);
+                            
+                        }
+                    });
+                }
+                function addLastRow(data) {
+                    var total_amount=0;
+                    for(var i=0;i<data.length;i++){
+                         total_amount += Number(data[i].total_amount);
+                    }
+                    console.log(total_amount);
+                    const newRow = document.getElementById("generatedreport").insertRow(-1);
+                    // Create new cells for the row
+                    const cell1 = newRow.insertCell(0);
+                    const cell2 = newRow.insertCell(1);
+                    cell1.colSpan = 2; 
+                    cell1.innerHTML = "<center> Total Amount </center>";
+                    cell2.innerHTML = total_amount;
+                }
+            </script>
+</body>
+</html>
