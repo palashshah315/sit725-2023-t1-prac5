@@ -1,16 +1,4 @@
 let model = require('../model/model');
-
-// const getTotalSummaryReport = (req, res) => {
-//     model.getTotalSummaryReport((err, result) => {
-//         if(err){
-//             res.json({ statusCode: 400, message: err});
-//         }
-//         else{
-//             res.json({ statusCode: 200, data: result, message: 'Successful fetch' });
-//         }
-//     });
-// }
-
 const addData = (req,res) =>{
     let data = req.body;
     model.addData(data, (err,result) =>{
